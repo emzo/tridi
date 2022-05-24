@@ -17,7 +17,8 @@ module.exports = {
     filename: '[name].js',
     library: 'Tridi',
     libraryTarget: 'umd',
-    umdNamedDefine: true
+    umdNamedDefine: true,
+    globalObject: 'globalThis'
   },
   resolve: {
     extensions: ['.ts', '.js'],

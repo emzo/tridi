@@ -51,6 +51,7 @@ export interface TridiOptions {
   onPrevMove?: Function | undefined;
   onNextFrame?: Function | undefined;
   onPrevFrame?: Function | undefined;
+  onSetFrame?: Function | undefined;
   onDragStart?: Function | undefined;
   onDragEnd?: Function | undefined;
   onUpdate?: Function | undefined;
@@ -144,6 +145,8 @@ export class Tridi {
 
   onPrevFrame?: Function | undefined;
 
+  onSetFrame?: Function | undefined;
+
   onDragStart?: Function | undefined;
 
   onDrag?: Function | undefined;
@@ -215,6 +218,7 @@ export class Tridi {
     this.onPrevMove = options.onPrevMove || undefined;
     this.onNextFrame = options.onNextFrame || undefined;
     this.onPrevFrame = options.onPrevFrame || undefined;
+    this.onSetFrame = options.onSetFrame || undefined;
     this.onDragStart = options.onDragStart || undefined;
     this.onDragEnd = options.onDragEnd || undefined;
     this.onLoad = options.onLoad || undefined;
@@ -523,6 +527,13 @@ export class Tridi {
     this.trigger('onPrevFrame');
   }
 
+  private setFrame(whichFrame: number) {
+    const frame = Math.abs(whichFrame);
+    this.imageIndex = frame % this.count! === 0 ? this.count! : frame % this.count!;
+    this.viewerImage().src = this.image(this.imageIndex);
+    this.trigger('onSetFrame');
+  }
+
   private nextMove() {
     this.trigger('onNextMove');
     return this.inverse ? this.prevFrame() : this.nextFrame();
@@ -798,7 +809,11 @@ export class Tridi {
     this.prevMove();
   }
 
-  autoplayStart() {
+  goto(whichFrame: number) {
+    this.setFrame(whichFrame);
+  }
+
+  autoplayStart(): void {
     this.toggleAutoplay(true);
   }
 

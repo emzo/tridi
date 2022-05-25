@@ -89,6 +89,7 @@ var Tridi = /** @class */ (function () {
         this.onPrevMove = options.onPrevMove || undefined;
         this.onNextFrame = options.onNextFrame || undefined;
         this.onPrevFrame = options.onPrevFrame || undefined;
+        this.onSetFrame = options.onSetFrame || undefined;
         this.onDragStart = options.onDragStart || undefined;
         this.onDragEnd = options.onDragEnd || undefined;
         this.onLoad = options.onLoad || undefined;
@@ -314,6 +315,11 @@ var Tridi = /** @class */ (function () {
         this.viewerImage().src = this.image(this.imageIndex);
         this.trigger('onPrevFrame');
     };
+    Tridi.prototype.setFrame = function (whichFrame) {
+        this.imageIndex = whichFrame % this.count === 0 ? this.count : whichFrame % this.count;
+        this.viewerImage().src = this.image(this.imageIndex);
+        this.trigger('onSetFrame');
+    };
     Tridi.prototype.nextMove = function () {
         this.trigger('onNextMove');
         return this.inverse ? this.prevFrame() : this.nextFrame();
@@ -536,6 +542,9 @@ var Tridi = /** @class */ (function () {
     };
     Tridi.prototype.prev = function () {
         this.prevMove();
+    };
+    Tridi.prototype.goto = function (whichFrame) {
+        this.setFrame(whichFrame);
     };
     Tridi.prototype.autoplayStart = function () {
         this.toggleAutoplay(true);

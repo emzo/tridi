@@ -42,6 +42,7 @@ export interface TridiOptions {
     onPrevMove?: Function | undefined;
     onNextFrame?: Function | undefined;
     onPrevFrame?: Function | undefined;
+    onSetFrame?: Function | undefined;
     onDragStart?: Function | undefined;
     onDragEnd?: Function | undefined;
     onUpdate?: Function | undefined;
@@ -94,6 +95,7 @@ export declare class Tridi {
     onPrevMove?: Function | undefined;
     onNextFrame?: Function | undefined;
     onPrevFrame?: Function | undefined;
+    onSetFrame?: Function | undefined;
     onDragStart?: Function | undefined;
     onDrag?: Function | undefined;
     onDragEnd?: Function | undefined;
@@ -133,6 +135,7 @@ export declare class Tridi {
     private updateViewerImage;
     private nextFrame;
     private prevFrame;
+    private setFrame;
     private nextMove;
     private prevMove;
     private rotateViewerImage;
@@ -156,6 +159,7 @@ export declare class Tridi {
     private start;
     next(): void;
     prev(): void;
+    goto(whichFrame: number): void;
     autoplayStart(): void;
     autoplayStop(): void;
     update(options: TridiUpdatableOptions, syncFrame?: boolean): void;
